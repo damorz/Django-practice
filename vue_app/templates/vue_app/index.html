@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div id="app" class="main-block">
+    <div class="d-flex flex-wrap">
+        <div class="w-30  pic-cover-fill">
+            <img style="max-width: 100%;" src="{% static 'self_manage/cover.jpg' %}" >
+        </div>
+        <div style="background-color: rgb(255, 255, 255); "  class="flex-fill">
+            <div class="Absolute-Center">
+                <h1>
+                    " Manage your life time "
+                </h1>
+                <p>
+                    This website is create for manage life schedule and improve your self.
+                </p>   
+            </div>
+
+        </div>
+    </div>
+</div> 
+
+{% endblock %}

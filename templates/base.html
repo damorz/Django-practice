@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <m}eta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=7">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        
+        {% if env_name == 'production' %}
+            <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        {% else %}
+            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+       {% endif %}
+
+        <link href='https://fonts.googleapis.com/css?family=Sen' rel='stylesheet'>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js" integrity="sha512-nqIFZC8560+CqHgXKez61MI0f9XSTKLkm0zFVm/99Wt0jSTZ7yeeYwbzyl0SGn/s8Mulbdw+ScCG41hmO2+FKw==" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+
+        <title>Self Manage</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-edit" >
+            <a class="navbar-brand" href="{% url 'index' %}">Self.c</a>
+            <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse " id="navbarText" >
+                <ul class="navbar-nav ml-auto">
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item ">
+                        <a style="color: white;" class="nav-link test" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a style="color: white;" class="nav-link test" href="{% url 'register' %}">Register</a>
+                    </li>
+                    {% elif request.user.is_authenticated %}
+                        <li class="nav-link">
+                            <p style="color: white;" >Hello, {{request.user}}</p>  
+                        </li>
+                        <li class="nav-link" >
+                            <a style="color: white;"  href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                
+            </div>
+        </nav>
+        <div>
+            {% block content %}
+            
+            {% endblock %}
+                
+        </div>
+
+
+        <script src="{% static 'main.js' %}"></script>
+    </body>
+</html>

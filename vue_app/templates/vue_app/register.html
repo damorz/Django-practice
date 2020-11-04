@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div id="app" class="container-login">
+    <div id="regis-item" class="center-login">
+      <h1 class="head-login">ACCOUNT SIGN-UP</h1>
+        <form method="POST" action="">
+          {% csrf_token %}
+          <div  class="form-group ">
+            {{form.username}}
+          </div>
+          <div class="form-group">
+            {{form.first_name}}
+          </div>
+          <div class="form-group">
+            {{form.last_name}}
+          </div>
+          <div class="form-group">
+            {{form.email}}
+          </div>
+          <div class="form-group">
+            {{form.password1}}
+          </div>
+          <div class="form-group">
+            {{form.password2}}
+          </div>
+          <p style="font-size: 15px; color: rgb(141, 141, 141);" >Password must contain at least 8 characters and can’t be entirely numeric. </p>
+          <button  id="submit-button" name="regis-button" type="submit" class="btn btn-dark submit-btn" >Sign Up</button>
+          {{form.errors}}
+        </form>
+        <div class="span-signUp">
+          <span>
+            Do you have an account?
+            <a style="color: rgb(250, 121, 0);" href="{% url 'login' %}">Login</a>
+          </span>
+        </div>
+        
+    </div>
+    
+  </div>
+<script>
+  console.log(document.getElementsByTagName('ul').length);
+  if(document.getElementsByClassName('errorlist').length != 0){
+    document.getElementsByClassName('errorlist')[0].style.color = 'red';
+    document.getElementsByClassName('errorlist')[0].style.margin = '2%';
+  }
+  var form_fields = document.getElementsByTagName('input')
+  form_fields[1].placeholder = 'Username'
+  form_fields[2].placeholder = 'First name'
+  form_fields[3].placeholder = 'Last name'
+  form_fields[4].placeholder = 'Email'
+  form_fields[5].placeholder = 'Password'
+  form_fields[6].placeholder = 'Confirm Password'
+
+  for(var field in form_fields){
+    form_fields[field].className = 'form-control input-login'
+  }
+
+
+  var regisItem = new Vue({
+    el: '#regis-item',
+    data: {
+      error:false,
+      errors:[]
+    },
+    methods:{
+      submit(){
+        this.errors = [];
+        this.error = false;
+        if(!document.getElementById('id_username').value){
+          console.log('username');
+          this.error = true;
+          this.errors.push('Please fill the username.');
+        }
+        if(!document.getElementById('id_first_name').value){
+          console.log('firstname');
+          this.error = true;
+          this.errors.push('Please fill the first name.');
+        }
+        if(!document.getElementById('id_last_name').value){
+          console.log('lastname');
+          this.error = true;
+          this.errors.push('Please fill the last name.');
+        }
+        if(!document.getElementById('id_email').value){
+          console.log('email');
+          this.error = true;
+          this.errors.push('Please fill the email.');
+        }
+        if(!document.getElementById('id_password1').value){
+          console.log('no pass');
+          this.error = true;
+          this.errors.push('Please fill the password.');
+        }
+        if(Number.parseInt(document.getElementById('id_password1').value) == document.getElementById('id_password1').value){
+          console.log('all pass is integer');
+          this.error = true;
+          this.errors.push('Password must more than 8 letter and not a number only.');
+        }
+        if(document.getElementById('id_password1').value.length < 8){
+          console.log('pass length');
+          this.error = true;
+          this.errors.push('Password must more than 8 letter and not a number only.');
+        }
+        if(document.getElementById('id_password1').value != document.getElementById('id_password2').value){
+          console.log('confirm pass fail');
+          this.error = true;
+          this.errors.push('Password not match.');
+        }   
+      }
+    }
+  });
+</script>
+
+{% endblock %}
